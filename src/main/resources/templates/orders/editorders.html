@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="components :: header"/>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+
+    <ul th:replace="components :: sidebar"/>
+
+    <!-- Content Wrapper (content of the left side) -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <nav th:replace="components :: topbar"/>
+
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <legend>Thay đổi trạng thái đơn đặt hàng</legend>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" th:action="@{/admin/orders/edit}" th:object="${orders}" method="post">
+                            <div class="form-group">
+
+                                <div class="col-md-8">
+                                    <label class="col-md-4 control-label">ID</label>
+                                    <input class="form-control input-md" readonly="readonly"
+                                           required="required" type="text" style="width: 400px !important;"
+                                           th:field="*{id}"/>
+                                    <label class="col-md-4 control-label">Ngày đặt</label>
+                                    <input disabled="disabled" class="form-control input-md"
+                                           required="required" type="text"
+                                           style="width: 400px !important;" th:field="*{orderDate}"/>
+                                    <label class="col-md-4 control-label">Địa chỉ</label>
+                                    <input disabled="disabled" class="form-control input-md"
+                                           required="required" type="text"
+                                           style="width: 400px !important;" th:field="*{address}"/>
+                                    <label class="col-md-4 control-label">Số điện thoại</label>
+                                    <input disabled="disabled" class="form-control input-md"
+                                           required="required" type="text"
+                                           style="width: 400px !important;" th:field="*{phoneNumber}"/>
+                                    <label class="col-md-4 control-label">Tổng tiền</label>
+                                    <input disabled="disabled" class="form-control input-md"
+                                           required="required" type="text"
+                                           style="width: 400px !important;" th:field="*{totalPrice}"/>
+
+<br>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option1" name="option1" class="custom-control-input"
+                                               value="1" th:field="*{status}">
+                                        <label class="custom-control-label" for="option1">Đang xử lí</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option2" name="option2" class="custom-control-input"
+                                               value="2" th:field="*{status}">
+                                        <label class="custom-control-label" for="option2">Đang Vận chuyển</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="option3" name="option3" class="custom-control-input"
+                                               value="3" th:field="*{status}">
+                                        <label class="custom-control-label" for="option3">Đã nhận hàng</label>
+                                    </div>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('status')}"
+                                          th:errors="*{status}"></span>
+
+                                </div>
+                            </div>
+                            <div class="center-block">
+                                <input id="singlebutton" name="singlebutton"
+                                       style="margin-left: 34%;"
+                                       class="btn btn-success" type="submit" value="Lưu"/>
+                                <a class="btn btn-primary" th:href="@{/admin/orders/all}" role="button">Trở lại</a>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+
+</div>
+<!-- End of Page Wrapper -->
+<div th:replace="components :: utilities"/>
+</body>
+
+
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user-component :: head"/>
+
+<body>
+
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+
+    <div th:replace="user-component :: wrapper-top"/>
+
+    <!-- Here is main of the page-->
+
+    <div class="log-in ptb-20 ptb-sm-60">
+        <div class="container">
+            <div class="row">
+                <!-- New Customer Start -->
+                <div class="col-md-6">
+                    <div class="well mb-sm-30">
+                        <div class="new-customer">
+                            <h3 class="custom-title">KHÁCH HÀNG MỚI</h3>
+                            <p class="mtb-10"><strong></strong></p>
+                            <p>Đăng ký tài khoản để mua hàng nhanh hơn. Theo dõi đơn đặt hàng, vận chuyển. Cập nhật các
+                                tin tức sự kiện và các chương trình giảm giá của chúng tôi.</p>
+                            <a class="customer-btn" href="/register">ĐĂNG KÝ</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Customer End -->
+                <!-- Returning Customer Start -->
+                <div class="col-md-6">
+                    <div class="well">
+                        <div class="return-customer">
+                            <h3 class="mb-10 custom-title">ĐĂNG NHẬP</h3>
+                            <p class="mb-10"><strong>Nếu bạn có một tài khoản, xin vui lòng đăng nhập.</strong></p>
+                            <form th:action="@{/login}" method="post">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" name="username" placeholder="Nhập tên đăng nhập" id="username"
+                                           class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" placeholder="Nhập mật khẩu" id="password"
+                                           class="form-control">
+                                </div>
+                                <input type="submit" value="ĐĂNG NHẬP" class="return-customer-btn">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Returning Customer End -->
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- End Here is main of the page-->
+
+
+    <div th:replace="user-component :: wrapper-bottom"/>
+
+</div>
+<!-- Main Wrapper End Here -->
+
+<div th:replace="user-component :: utils"/>
+
+</body>
+
+</html>

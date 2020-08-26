@@ -1,0 +1,176 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user-component :: head"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //disable input number
+        $("[type='number']").keypress(function (evt) {
+            evt.preventDefault();
+        });
+
+        //ajax update product quantity
+        var data = {};
+        $(":input").bind('keyup mouseup', function () {
+            let productId = this.id;
+            let quantity = this.value;
+            data["productId"] = productId;
+            data["quantity"] = quantity;
+            doUpdateAjax();
+        });
+
+        function doUpdateAjax() {
+            $.ajax({
+                type: "post",
+                url: "/update-cart",
+                data: data,
+                dataType: 'json',
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    $('#total-amount').text(data.amountTotal + ".0 VNĐ");
+                    console.log("SUCCESS : ", data);
+                },
+                error: function (e) {
+                    console.log("ERROR : ", e);
+                }
+            });
+        }
+
+        //remove product from shopping cart
+        $(".remove-product").click(function (event) {
+            const productId = event.target.id;
+            // alert("Xác nhận xóa sản phẩm khỏi giỏ hàng?")
+            var confirm = window.confirm("Xác nhận xóa sản phẩm khỏi giỏ hàng?");
+            if (confirm) {
+                $.ajax({
+                    type: "post",
+                    url: "/remove-product",
+                    data: {productId: productId},
+                    dataType: 'json',
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        var id = "#tr" + productId;
+                        $(id).remove();
+                        console.log("SUCCESS : ", data);
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    }
+                });
+            }
+        });
+
+    });
+</script>
+<body>
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+
+    <div th:replace="user-component :: wrapper-top"/>
+
+    <!-- Here is main of the page-->
+
+    <div class="cart-main-area ptb-20 ptb-sm-60">
+        <div class="container">
+            <!-- Row start -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <!-- Form Start -->
+                    <!-- Table Content Start -->
+                    <div class="table-content table-responsive mb-45">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th class="product-name">Tên sản phẩm</th>
+                                <th class="product-price">Giá</th>
+                                <th class="product-quantity">Số lượng</th>
+                                <th class="product-remove">Xoá</th>
+                            </tr>
+                            </thead>
+                            <div th:unless="${isCartEmpty}">
+                                <tbody>
+                                <th:block th:each="cartLineInfo : ${cartInfo.cartLines}">
+                                    <tr th:id="${'tr'+cartLineInfo.product.id}">
+                                        <td class="product-name"><a href="#"> <span
+                                                th:text="${cartLineInfo.product.name}"/>
+                                        </a></td>
+                                        <td class="product-price"><span class="amount"
+                                                                        th:text="${cartLineInfo.product.price+' VNĐ'}"></span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <input th:id="${cartLineInfo.product.id}" type="number"
+                                                   th:value="${cartLineInfo.quantity}" min="1" max="9"/>
+                                        </td>
+                                        <td class="product-remove">
+                                            <i th:id="${cartLineInfo.product.id}"
+                                               class="fa fa-times remove-product"
+                                               aria-hidden="true"></i></td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </div>
+                        </table>
+                        <div th:if="${isCartEmpty}" th:text="${'Không có sản phẩm nào trong giỏ hàng'}"/>
+                    </div>
+                    <!-- Table Content Start -->
+                    <div class="row">
+                        <!-- Cart Button Start -->
+                        <div class="col-md-8 col-sm-12">
+                            <div class="buttons-cart">
+                                <a href="/">Tiếp tục mua</a>
+                            </div>
+                        </div>
+                        <!-- Cart Button Start -->
+                        <!-- Cart Totals Start -->
+                        <div class="col-md-4 col-sm-12">
+                            <div class="cart_totals float-md-right text-md-right">
+                                <table class="float-md-right">
+                                    <tbody>
+                                    <tr class="order-total">
+                                        <th>Tổng cộng</th>
+                                        <td>
+                                            <strong>
+                                                    <span id="total-amount" class="amount" th:if="${cartInfo}"
+                                                          th:text="${cartInfo.getAmountTotal()+' VNĐ'}">
+                                                    </span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="wc-proceed-to-checkout">
+                                    <a th:href="@{/checkout}">Thanh toán</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Cart Totals End -->
+                    </div>
+                    <!-- Row End -->
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+    </div>
+
+
+    <!-- End Here is main of the page-->
+
+
+    <div th:replace="user-component :: wrapper-bottom"/>
+
+</div>
+<!-- Main Wrapper End Here -->
+
+<div th:replace="user-component :: utils"/>
+
+</body>
+
+</html>

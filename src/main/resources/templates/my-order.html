@@ -1,0 +1,65 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user-component :: head"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".orderdate").map(function() {
+            const date = new Date(this.innerHTML);
+            const display = (date.getDate()+1) + '/' + date.getMonth() + '/' +  date.getFullYear()
+            this.innerHTML = display;
+        })
+
+    });
+</script>
+<body>
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+
+    <div th:replace="user-component :: wrapper-top"/>
+
+    <!-- Here is main of the page-->
+    <div class="container" style="margin-bottom: 50px; margin-top: 20px">
+        <h3>Danh sách đơn hàng</h3>
+        <table style="margin-top: 10px" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Ngày đặt</th>
+                <th>Sản phẩm</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+            </thead>
+            <tbody id="data-container">
+            <tr th:each="orders : ${ordersList}">
+                <td><span th:text="${orders.id}"></span></td>
+                <td><span class="orderdate" th:text="${orders.orderDate}"></span></td>
+                <td>
+                    <span th:each="orderitem :${orders.orderItems}">
+                        <span th:text="${orderitem.product.name}"></span> </br>
+                    </span>
+                </td>
+                <td><span th:text="${orders.totalPrice}"></span></td>
+                <td th:switch="${orders.status}">
+                    <span th:case="'0'">Chưa xác nhận</span>
+                    <span th:case="'1'">Đang xử lí</span>
+                    <span th:case="'2'">Đang Vận chuyển</span>
+                    <span th:case="'3'">Đã nhận hàng</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- End Here is main of the page-->
+    <div th:replace="user-component :: wrapper-bottom"/>
+
+</div>
+<!-- Main Wrapper End Here -->
+
+<div th:replace="user-component :: utils"/>
+
+</body>
+
+</html>

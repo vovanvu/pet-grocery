@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="components :: header"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+
+    <ul th:replace="components :: sidebar"/>
+
+    <!-- Content Wrapper (content of the left side) -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <nav th:replace="components :: topbar"/>
+
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <a class="btn btn-success m-0 font-weight-bold" href="/admin/product/add" role="button"><i
+                                class="far fa-plus-square"></i> Thêm sản phẩm</a>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Kho</th>
+                                    <th>Thao tác</th>
+                                    <th>Upload</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản hẩm</th>
+                                    <th>Giá</th>
+                                    <th>Kho</th>
+                                    <th>Thao tác</th>
+                                    <th>Upload</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                <tr th:each="product : ${productList}">
+                                    <td><span th:text="${product.id}"></span></td>
+                                    <td><span th:text="${product.name}"></span></td>
+                                    <td><span th:text="${product.price}"></span></td>
+                                    <td><span th:text="${product.stock}"></span></td>
+                                    <td>
+                                        <span><a th:href="@{/admin/product/edit(id=${product.id})}" class="btn btn-sm btn-primary btn-circle">
+                    <i class="fas fa-pencil-alt"></i>
+                  </a></span>
+                                        <span><a th:href="@{/admin/product/delete(id=${product.id})}" class="btn btn-sm btn-primary btn-circle">
+                    <i class="fas fa-trash"></i>
+                  </a></span>
+                                    </td>
+                                    <td>
+                                        <form method="POST" enctype="multipart/form-data" class="fileUploadForm" th:id="${'f'+product.id}">
+                                            <div class="form-group">
+
+                                                <input type="file" class="form-control"
+                                                       placeholder="Upload File" name="uploadfile"></input>
+                                                <input type="hidden" name="idProduct" th:value="${product.id}">
+                                            </div>
+
+                                            <button type="submit" class="btn-upload btn btn-default" th:id="${product.id}">Upload
+                                            </button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+
+</div>
+<script>
+    $(document).ready(() => {
+        $(".btn-upload").click((event) => {
+            const idProduct = event.target.id;
+            console.log(idProduct);
+            //stop submit the form, we will post it manually.
+            event.preventDefault();
+            doAjax(idProduct);
+        });
+    });
+
+    function doAjax(idProduct) {
+        const id = "#f"+idProduct;
+        // Get form
+        var form = $(id)[0];
+        var data = new FormData(form);
+        // data.idProduct = idProduct;
+        // console.log(data.idProduct);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/admin/product/upload",
+            data: data,
+            processData: false, //prevent jQuery from automatically transforming the data into a query string
+            contentType: false,
+            cache: false,
+            success: (data) => {
+                $("#listFiles").text(data);
+                alert(data );
+            },
+            error: (e) => {
+                $("#listFiles").text(e.responseText);
+                alert( data);
+            }
+        });
+    }
+</script>
+<!-- End of Page Wrapper -->
+<div th:replace="components :: utilities"/>
+</body>
+
+
+</html>

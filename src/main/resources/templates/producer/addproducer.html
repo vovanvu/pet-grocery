@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="components :: header"/>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+
+    <ul th:replace="components :: sidebar"/>
+
+    <!-- Content Wrapper (content of the left side) -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <nav th:replace="components :: topbar"/>
+
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <legend>Thêm nhà sản xuất</legend>
+                    </div>
+                    <div class="card-body">
+                        <form class="form-horizontal" th:action="@{/admin/producer/add}" th:object="${producer}"
+                              method="post">
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Tên nhà sản xuất</label>
+                                <div class="col-md-8">
+                                    <input
+                                            class="form-control input-md"
+                                            required="required" type="text"
+                                            style="width: 400px !important;"
+                                            placeholder="Nhập tên nhà sản xuất"
+                                            th:field="*{nameProducer}"
+                                    />
+                                    <span style="color:red;" th:if="${#fields.hasErrors('nameProducer')}"
+                                          th:errors="*{nameProducer}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Địa chỉ nhà sản xuất</label>
+                                <div class="col-md-8">
+                                    <input
+                                            class="form-control input-md"
+                                            required="required" type="text"
+                                            style="width: 400px !important;"
+                                            placeholder="Nhập Địa chỉ nhà sản xuất"
+                                            th:field="*{address}"
+                                    />
+                                    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Số điện thoại nhà sản xuất</label>
+                                <div class="col-md-8">
+                                    <input
+                                            class="form-control input-md"
+                                            required="required" type="text"
+                                            style="width: 400px !important;"
+                                            placeholder="Nhập số điện thoại nhà sản xuất"
+                                            th:field="*{phoneNumber}"
+                                    />
+                                    <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Email nhà sản xuất</label>
+                                <div class="col-md-8">
+                                    <input
+                                            class="form-control input-md"
+                                            required="required" type="text"
+                                            style="width: 400px !important;"
+                                            placeholder="Nhập Email nhà sản xuất"
+                                            th:field="*{email}"
+                                    />
+                                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                </div>
+                            </div>
+
+                            <div class="center-block">
+                                <input id="singlebutton" name="singlebutton"
+                                       style="margin-left: 34%;"
+                                       class="btn btn-success" type="submit" value="Thêm nhà sản xuất"/>
+                                <a class="btn btn-primary" th:href="@{/admin/producer/all}" role="button">Trở lại</a>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+
+</div>
+<!-- End of Page Wrapper -->
+<div th:replace="components :: utilities"/>
+</body>
+
+
+</html>

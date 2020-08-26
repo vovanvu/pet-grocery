@@ -1,0 +1,483 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org
+  http://www.ultraq.net.nz/thymeleaf/layout http://www.ultraq.net.nz/thymeleaf/layout
+  http://www.thymeleaf.org/thymeleaf-extras-springsecurity4 http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Trang chủ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicons -->
+    <link rel="shortcut icon" th:href="@{/petuser/img/favicon.ico}">
+    <!-- Fontawesome css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/font-awesome.min.css}">
+    <!-- Ionicons css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/ionicons.min.css}">
+    <!-- linearicons css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/linearicons.css}">
+    <!-- Nice select css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/nice-select.css}">
+    <!-- Jquery fancybox css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/jquery.fancybox.css}">
+    <!-- Jquery ui price slider css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/jquery-ui.min.css}">
+    <!-- Meanmenu css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/meanmenu.min.css}">
+    <!-- Nivo slider css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/nivo-slider.css}">
+    <!-- Owl carousel css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/owl.carousel.min.css}">
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/bootstrap.min.css}">
+    <!-- Custom css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/default.css}">
+    <!-- Main css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/style.css}">
+    <!-- Responsive css -->
+    <link rel="stylesheet" th:href="@{/petuser/css/responsive.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{/petuser/js/search.js}"></script>
+    <!-- Modernizer js -->
+    <script th:src="@{/petuser/js/vendor/modernizr-3.5.0.min.js}"></script>
+</head>
+
+<div th:fragment="wrapper-top">
+    <div class="popup_banner">
+        <span class="popup_off_banner">×</span>
+        <div class="banner_popup_area">
+            <img src="/petuser/img/banner/pop-banner.jpg" alt="">
+        </div>
+    </div>
+
+    <header>
+
+        <!-- Header Middle Start Here -->
+        <div class="header-middle ptb-15">
+            <div class="container">
+                <div class="row align-items-center no-gutters">
+                    <div class="col-lg-3 col-md-12">
+                        <div class="logo mb-all-30">
+                            <a href="/"><img src="/petuser/img/logo/logo.png" alt="logo-image"></a>
+                        </div>
+                    </div>
+                    <!-- Categorie Search Box Start Here -->
+                    <div class="col-lg-5 col-md-8 ml-auto mr-auto col-10">
+                        <div class="categorie-search-box">
+                            <form >
+                                <input type="text"  name="nameSearch" placeholder="Bạn muốn tìm..." id="nameSearch">
+                                <button id="searchHead"><i class="lnr lnr-magnifier"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Categorie Search Box End Here -->
+                    <!-- Cart Box Start Here -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="cart-box mt-all-30">
+                            <ul class="d-flex justify-content-lg-end justify-content-center align-items-center">
+                                <li><a th:href="@{/cart}"><i class="lnr lnr-cart"></i><span class="my-cart">
+                                    <span th:if="${session.myCart}"
+                                          class="total-pro" th:text="${session.myCart.getQuantityTotal()}"> </span>
+
+
+                                    <span>Giỏ hàng</span></span></a>
+                                    <ul class="ht-dropdown cart-box-width">
+                                        <li>
+                                            <!-- Cart Box Start -->
+                                            <th:block th:if="${session.myCart}">
+                                                <th:block th:each="cartLineInfo : ${session.myCart.cartLines}">
+                                                    <div class="single-cart-box">
+                                                        <div class="cart-img">
+                                                            <a href="#"><img src="petuser/img/logo/logo.png"
+                                                                             alt="cart-image"></a>
+                                                            <span class="pro-quantity"
+                                                                  th:text="${cartLineInfo.quantity+'X'}"></span>
+                                                        </div>
+                                                        <div class="cart-content">
+                                                            <h6><a href="product.html"><span
+                                                                    th:text="${cartLineInfo.product.name}"/></a></h6>
+                                                            <span class="cart-price"
+                                                                  th:text="${cartLineInfo.product.price+' VNĐ'}"></span>
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                            </th:block>
+                                            <!-- Cart Box End -->
+                                            <!-- Cart Footer Inner Start -->
+                                            <div class="cart-footer">
+                                                <ul class="price-content">
+                                                    <li>Tổng cộng <span id="total-amount-1" class="amount"
+                                                                          th:if="${session.myCart}"
+                                                                          th:text="${session.myCart.getAmountTotal()+' VNĐ'}"/>
+                                                    </li>
+                                                </ul>
+                                                <div class="cart-actions text-center">
+                                                    <a class="cart-checkout" href="/checkout">Thanh Toán</a>
+                                                </div>
+                                            </div>
+                                            <!-- Cart Footer Inner End -->
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>&emsp;&emsp;</li>
+
+                                <li><a sec:authorize="isAnonymous()" th:href="@{/login}"><i
+                                        class="lnr lnr-user"></i><span
+                                        class="my-cart">Đăng Nhập</span></a>
+                                    <a sec:authorize="isAuthenticated()">Xin chào: <span
+                                            th:text="${#authentication.getPrincipal().getUser().getName()}"></span></a>
+                                    <a sec:authorize="hasAuthority('ROLE_ADMIN')">
+                                        |<a th:href="@{/admin/orders/all}">Quản lý</a>
+                                    </a>
+                                    </br>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+                                       class="btn btn-default btn-sm" role="button">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Cart Box End Here -->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Header Middle End Here -->
+        <!-- Header Bottom Start Here -->
+        <div class="header-bottom  header-sticky">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-3 col-lg-4 col-md-6 vertical-menu d-none d-lg-block">
+                    </div>
+                    <div class="col-xl-9 col-lg-8 col-md-12 ">
+                        <nav class="d-none d-lg-block">
+                            <ul class="header-bottom-list d-flex">
+                                <li class="active"><a href="/">Trang Chủ</a></li>
+                                <li><a th:href="@{/shop/productList}">Danh sách sản phẩm</i></a></li>
+                                <li><a sec:authorize="isAuthenticated()" th:href="@{/myorder}">Đơn hàng của tôi</i></a></li>
+                                <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/admin/orders/all}">Trang quản lý</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Header Bottom End Here -->
+    </header>
+    <!-- Main Header Area End Here -->
+    <!-- Categorie Menu & Slider Area Start Here -->
+    <div class="main-page-banner home-3">
+        <div class="container">
+            <div class="row">
+                <!-- Vertical Menu Start Here -->
+                <div class="col-xl-3 col-lg-4 d-none d-lg-block">
+                    <div class="vertical-menu mb-all-30">
+                    </div>
+                </div>
+                <!-- Vertical Menu End Here -->
+            </div>
+            <!-- Row End -->
+        </div>
+
+        <!-- Container End -->
+    </div>
+    <!-- Categorie Menu & Slider Area End Here -->
+</div>
+
+<div th:fragment="wrapper-bottom">
+    <!-- Support Area Start Here -->
+    <div class="support-area bdr-top">
+        <div class="container">
+            <div class="d-flex flex-wrap text-center">
+                <div class="single-support">
+                    <div class="support-icon">
+                        <i class="lnr lnr-gift"></i>
+                    </div>
+                    <div class="support-desc">
+                        <h6>Siêu rẻ</h6>
+                        <span>Chúng tôi bán với giá siêu rẻ, hợp với túi tiền.</span>
+                    </div>
+                </div>
+                <div class="single-support">
+                    <div class="support-icon">
+                        <i class="lnr lnr-rocket"></i>
+                    </div>
+                    <div class="support-desc">
+                        <h6>Vận chuyển</h6>
+                        <span>Vận chuyển toàn quốc, nhanh chóng, tiện lợi</span>
+                    </div>
+                </div>
+                <div class="single-support">
+                    <div class="support-icon">
+                        <i class="lnr lnr-lock"></i>
+                    </div>
+                    <div class="support-desc">
+                        <h6>Thanh toán an toàn</h6>
+                        <span>Thanh toán bằng tiền mặt hoặc thẻ ngân hàng</span>
+                    </div>
+                </div>
+                <div class="single-support">
+                    <div class="support-icon">
+                        <i class="lnr lnr-enter-down"></i>
+                    </div>
+                    <div class="support-desc">
+                        <h6>Đáng tin cậy</h6>
+                        <span>Shop thành lập lâu năm, đảm bảo uy tín</span>
+                    </div>
+                </div>
+                <div class="single-support">
+                    <div class="support-icon">
+                        <i class="lnr lnr-users"></i>
+                    </div>
+                    <div class="support-desc">
+                        <h6>Hổ trợ 24/7</h6>
+                        <span>Hân hạnh phục vụ khách hàng mọi lúc</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Support Area End Here -->
+    <!-- Footer Area Start Here -->
+    <footer class="off-white-bg2 pt-95 bdr-top pt-sm-55">
+        <!-- Footer Top Start -->
+        <div class="footer-top">
+            <div class="container">
+                <!-- Signup Newsletter Start -->
+                <div class="row mb-60">
+                    <div class="col-xl-7 col-lg-7 ml-auto mr-auto col-md-8">
+                        <div class="news-desc text-center mb-30">
+                            <h3>PETNL - PET Nông Lâm </h3>
+                            <p>Những gì tốt nhất cho thú cưng của bạn!</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Signup-Newsletter End -->
+                <div class="row">
+                    <!-- Single Footer Start -->
+                    <div class="col-lg-6 col-md-4 col-sm-6">
+                        <div class="single-footer mb-sm-40">
+                            <h3 class="footer-title">Hệ thống cửa hàng</h3>
+                            <div class="footer-content">
+                                <ul class="footer-list">
+                                    <li><i class="lnr lnr-map-marker"></i> 166C-D-E Trần Hưng Đạo P.Nguyễn Cư Trinh Quận 1</a></li>
+                                    <li><i class="lnr lnr-map-marker"></i> 143 Dương Bá Trạc, Phường 01, Quận 08 TP HCM</a></li>
+                                    <li><i class="lnr lnr-map-marker"></i> 322 Tùng Thiện Vương P.13 Quận 8, Hồ Chí Minh</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Footer Start -->
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="single-footer mb-sm-40">
+                            <h3 class="footer-title">Liên hệ mua hàng</h3>
+                            <div class="footer-content">
+                                <ul class="footer-list address-content">
+                                    <li><i class="lnr lnr-map-marker"></i> Trụ sở: 164 Trần Quang Khải - P Tân định - Q1
+                                    </li>
+                                    <li><i class="lnr lnr-envelope"></i><a href="#"> Mail: hotro@petnl.com </a>
+                                    </li>
+                                    <li>
+                                        <i class="lnr lnr-phone-handset"></i> Số điện thoại: 04 8888 9999
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Footer Start -->
+                </div>
+                <!-- Row End -->
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Footer Top End -->
+        <!-- Footer Middle Start -->
+        <div class="footer-middle text-center">
+            <div class="container">
+                <div class="footer-middle-content pt-20 pb-30">
+                    <ul class="social-footer">
+                        <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://plus.google.com/"><i class="fa fa-google-plus"></i></a></li>
+                        <li><a href="https://www.linkedin.com/"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Footer Middle End -->
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom pb-30">
+            <div class="container">
+
+                <div class="copyright-text text-center">
+                    <p>Copyright © 2020 <a target="_blank" href="#">PetNL</a></p>
+                </div>
+            </div>
+            <!-- Container End -->
+        </div>
+        <!-- Footer Bottom End -->
+    </footer>
+    <!-- Footer Area End Here -->
+    <!-- Quick View Content Start -->
+    <div class="main-product-thumbnail quick-thumb-content">
+        <div class="container">
+            <!-- The Modal -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <div class="row">
+                                <!-- Main Thumbnail Image Start -->
+                                <div class="col-lg-5 col-md-6 col-sm-5">
+                                    <!-- Thumbnail Large Image start -->
+                                    <div class="tab-content">
+                                        <div id="thumb1" class="tab-pane fade show active">
+                                            <a data-fancybox="images" href="img/products/35.jpg"><img
+                                                    src="img/products/35.jpg" alt="product-view"></a>
+                                        </div>
+                                        <div id="thumb2" class="tab-pane fade">
+                                            <a data-fancybox="images" href="img/products/13.jpg"><img
+                                                    src="img/products/13.jpg" alt="product-view"></a>
+                                        </div>
+                                        <div id="thumb3" class="tab-pane fade">
+                                            <a data-fancybox="images" href="img/products/15.jpg"><img
+                                                    src="img/products/15.jpg" alt="product-view"></a>
+                                        </div>
+                                        <div id="thumb4" class="tab-pane fade">
+                                            <a data-fancybox="images" href="img/products/4.jpg"><img
+                                                    src="img/products/4.jpg" alt="product-view"></a>
+                                        </div>
+                                        <div id="thumb5" class="tab-pane fade">
+                                            <a data-fancybox="images" href="img/products/5.jpg"><img
+                                                    src="img/products/5.jpg" alt="product-view"></a>
+                                        </div>
+                                    </div>
+                                    <!-- Thumbnail Large Image End -->
+                                    <!-- Thumbnail Image End -->
+                                    <div class="product-thumbnail mt-20">
+                                        <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
+                                            <a class="active" data-toggle="tab" href="#thumb1"><img
+                                                    src="img/products/35.jpg" alt="product-thumbnail"></a>
+                                            <a data-toggle="tab" href="#thumb2"><img src="img/products/13.jpg"
+                                                                                     alt="product-thumbnail"></a>
+                                            <a data-toggle="tab" href="#thumb3"><img src="img/products/15.jpg"
+                                                                                     alt="product-thumbnail"></a>
+                                            <a data-toggle="tab" href="#thumb4"><img src="img/products/4.jpg"
+                                                                                     alt="product-thumbnail"></a>
+                                            <a data-toggle="tab" href="#thumb5"><img src="img/products/5.jpg"
+                                                                                     alt="product-thumbnail"></a>
+                                        </div>
+                                    </div>
+                                    <!-- Thumbnail image end -->
+                                </div>
+                                <!-- Main Thumbnail Image End -->
+                                <!-- Thumbnail Description Start -->
+                                <div class="col-lg-7 col-md-6 col-sm-7">
+                                    <div class="thubnail-desc fix mt-sm-40">
+                                        <h3 class="product-header">Printed Summer Dress</h3>
+                                        <div class="pro-price mtb-30">
+                                            <p class="d-flex align-items-center"><span
+                                                    class="prev-price">16.51</span><span
+                                                    class="price">$15.19</span><span class="saving-price">save 8%</span>
+                                            </p>
+                                        </div>
+                                        <p class="mb-20 pro-desc-details">Long printed dress with thin adjustable
+                                            straps. V-neckline and wiring under the bust with ruffles at the bottom of
+                                            the dress.</p>
+                                        <div class="product-size mb-20 clearfix">
+                                            <label>Size</label>
+                                            <select class="">
+                                                <option>S</option>
+                                                <option>M</option>
+                                                <option>L</option>
+                                            </select>
+                                        </div>
+                                        <div class="color mb-20">
+                                            <label>color</label>
+                                            <ul class="color-list">
+                                                <li>
+                                                    <a class="orange active" href="#"></a>
+                                                </li>
+                                                <li>
+                                                    <a class="paste" href="#"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="box-quantity d-flex">
+                                            <form action="#">
+                                                <input class="quantity mr-40" type="number" min="1" value="1">
+                                            </form>
+                                            <a class="add-cart" href="cart.html">add to cart</a>
+                                        </div>
+                                        <div class="pro-ref mt-15">
+                                            <p><span class="in-stock"><i
+                                                    class="ion-checkmark-round"></i> IN STOCK</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Thumbnail Description End -->
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="custom-footer">
+                            <div class="socila-sharing">
+                                <ul class="d-flex">
+                                    <li>share</li>
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus-official" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick View Content End -->
+</div>
+<div th:fragment="utils">
+    <!-- jquery 3.2.1 -->
+    <script th:src="@{/petuser/js/vendor/jquery-3.2.1.min.js}"></script>
+    <!-- Countdown js -->
+    <script th:src="@{/petuser/js/jquery.countdown.min.js}"></script>
+    <!-- Mobile menu js -->
+    <script th:src="@{/petuser/js/jquery.meanmenu.min.js}"></script>
+    <!-- ScrollUp js -->
+    <script th:src="@{/petuser/js/jquery.scrollUp.js}"></script>
+    <!-- Nivo slider js -->
+    <script th:src="@{/petuser/js/jquery.nivo.slider.js}"></script>
+    <!-- Fancybox js -->
+    <script th:src="@{/petuser/js/jquery.fancybox.min.js}"></script>
+    <!-- Jquery nice select js -->
+    <script th:src="@{/petuser/js/jquery.nice-select.min.js}"></script>
+    <!-- Jquery ui price slider js -->
+    <script th:src="@{/petuser/js/jquery-ui.min.js}"></script>
+    <!-- Owl carousel -->
+    <script th:src="@{/petuser/js/owl.carousel.min.js}"></script>
+    <!-- Bootstrap popper js -->
+    <script th:src="@{/petuser/js/popper.min.js}"></script>
+    <!-- Bootstrap js -->
+    <script th:src="@{/petuser/js/bootstrap.min.js}"></script>
+    <!-- Plugin js -->
+    <script th:src="@{/petuser/js/plugins.js}"></script>
+    <!-- Main activaion js -->
+    <script th:src="@{/petuser/js/main.js}"></script>
+</div>
+</html>

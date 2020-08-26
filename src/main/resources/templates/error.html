@@ -1,0 +1,47 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user-component :: head"/>
+
+<body>
+
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+
+    <div th:replace="user-component :: wrapper-top"/>
+
+    <!-- Here is main of the page-->
+    <!-- Error 404 Area Start -->
+    <div class="error404-area ptb-100 ptb-sm-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-wrapper text-center">
+                        <div class="error-text">
+                            <h1>404</h1>
+                            <h2>Oops! PAGE NOT BE FOUND</h2>
+                            <p>Trang bạn đang tìm không tồn tại</p>
+                        </div>
+
+                        <div class="error-button">
+                            <a th:href="@{/}">Quay về trang chủ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Error 404 Area End -->
+    <!-- End Here is main of the page-->
+
+
+    <div th:replace="user-component :: wrapper-bottom"/>
+
+</div>
+<!-- Main Wrapper End Here -->
+
+<div th:replace="user-component :: utils"/>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="user-component :: head"/>
+
+<body>
+<!-- Main Wrapper Start Here -->
+<div class="wrapper">
+
+    <div th:replace="user-component :: wrapper-top"/>
+
+    <!-- Here is main of the page-->
+
+    <!-- Register Account Start -->
+    <div class="register-account ptb-20 ptb-sm-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="register-title">
+                        <h3 class="custom-title mb-10">ĐĂNG KÝ TÀI KHOẢN</h3>
+                        <p class="mb-10">Nếu bạn có một tài khoản, xin vui lòng chuyển qua trang đăng nhập</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Row End -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-register" th:action="@{/register}" th:object="${user}" method="post">
+                        <fieldset>
+                            <legend>Thông tin cá nhân</legend>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="f-name"><span class="require">*</span>Họ tên</label>
+                                <div class="col-md-10">
+                                    <input th:field="*{name}" type="text" class="form-control" id="f-name"
+                                           placeholder="Nhập tên">
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                          style="color:red;"></span>
+                                </div>
+                            </div>
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="username"><span class="require">*</span>Username</label>
+                                <div class="col-md-10">
+                                    <input th:field="*{username}" type="text" class="form-control" id="username"
+                                           placeholder="Nhập username">
+                                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                                          style="color:red;"></span>
+                                    <span th:if="${usernameNotAvailable}" th:text="${usernameNotAvailable}"
+                                          style="color:red;"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group d-md-flex align-items-md-center">
+                                <label class="control-label col-md-2" for="pwd"><span class="require">*</span>Mật
+                                    khẩu</label>
+                                <div class="col-md-10">
+                                    <input th:field="*{password}" type="password" class="form-control" id="pwd"
+                                           placeholder="Nhập mật khẩu">
+                                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                          style="color:red;"></span>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="terms">
+                            <div class="float-md-right">
+                                <input type="submit" value="ĐĂNG KÝ" class="return-customer-btn">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Row End -->
+        </div>
+        <!-- Container End -->
+    </div>
+    <!-- Register Account End -->
+
+    <!-- End Here is main of the page-->
+
+
+    <div th:replace="user-component :: wrapper-bottom"/>
+
+</div>
+<!-- Main Wrapper End Here -->
+
+<div th:replace="user-component :: utils"/>
+
+</body>
+
+</html>

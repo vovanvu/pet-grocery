@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<ul th:each="product : ${productList}">
+    <a th:href="@{/buy(id=${product.id})}"><span th:text="${product.name}"></span></a>
+</ul>
+
+<div th:if="${isCartEmpty}">Không có sản phẩm nào trong giỏ hàng!</div>
+<div th:unless="${isCartEmpty}">
+    <ul th:each="cartLineInfo : ${cartInfo.cartLines}">
+        <li>quantity of product: <span th:text="${cartLineInfo.product.id}"></span>|quantity: <span
+                th:text="${cartLineInfo.quantity}"></span></li>
+    </ul>
+</div>
+</body>
+</html>
